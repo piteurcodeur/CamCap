@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>WinFormsApp2.Program</StartupObject>
+    <ApplicationIcon>logo-removebg-preview.ico</ApplicationIcon>
+    <Authors>Louvet</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="logo-removebg-preview.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Imaging" Version="23.6.0" />
+    <PackageReference Include="GroupDocs.Metadata" Version="23.5.0" />
+    <PackageReference Include="SharpDX.Direct2D1" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\cameraAppDLL\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\cameraAppDLL\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
