@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>logo-removebg-preview.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="logo-removebg-preview.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Imaging" Version="24.7.0" />
+    <PackageReference Include="GroupDocs.Metadata" Version="24.7.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>..\..\C#\cameraAppDLL\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>..\..\C#\cameraAppDLL\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
