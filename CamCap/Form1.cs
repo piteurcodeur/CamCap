@@ -23,6 +23,24 @@ using GroupDocs.Metadata;
 using static System.Windows.Forms.DataFormats;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
+/*
+ * Conventions variables de chemin d'accès : 
+ * 
+ * actualPath = vers le dossier ouvert
+ * 
+ * AppDataPath = vers AppData/Roaming/
+ * 
+ * repertoirePath = vers le dossier repertoire
+ * 
+ * imagesPath = vers le dossier image
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
 namespace CamCap
 {
     public partial class Form1 : Form
@@ -35,7 +53,13 @@ namespace CamCap
         private VideoCapabilities[] videoCapabilities;
         private FormSettings frmSettings1 = new();
         private ToolStripItem? toolStripItem = null;
-        private string actualPath;
+
+        private string actualPath; //dernier répertoire ouvert, par default -> CamCapTemp/images
+        public string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public string repertoirePath = @"CamCapTemp/repertoire/";
+        public string imagesPath = @"CamCapTemp/images/";
+        
+
         public string defaultDirectoryPath = @"CamCapTemp/repertoire/";
 
         public Form1()
@@ -47,27 +71,46 @@ namespace CamCap
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-
+            
             actualPath = frmSettings1.LastFolderOpen;
+            
+
             imp_camList();
             button1.Enabled = false;
             listView1.ItemActivate += ListView1_ItemActivate;
             pictureBox1.BackColor = Color.DarkGray;
-            if (!Directory.Exists(@"CamCapTemp/repertoire"))
+
+            /*
+             * Création du dossier 'repertoire' dans AppData comme default directory
+             */
+            string myAppFolder = Path.Combine(AppDataPath, repertoirePath);
+            if (!Directory.Exists(myAppFolder))
             {
-                Directory.CreateDirectory(@"CamCapTemp/repertoire");
+                Directory.CreateDirectory(myAppFolder);
             }
+
+            /*
+             * Création du dossier images' dans AppData comme dossier temporaire pour les modifications d'images
+             * si actualPath n'existe pas
+             */
             try
             {
+                if(!Directory.Exists(actualPath)) 
+                {
+                    myAppFolder = Path.Combine(AppDataPath, imagesPath);
+                    if (!Directory.Exists(myAppFolder))
+                    {
+                        Directory.CreateDirectory(myAppFolder);
+                        actualPath = myAppFolder;
+                         
+                    }
+                }
                 AcquireImage(actualPath);
+                // a partir d'ici : actualPath existe
             }
             catch (Exception ex)
             {
-                if (!Directory.Exists(@"CamCapTemp/images"))
-                {
-                    Directory.CreateDirectory(@"CamCapTemp/images");
-                    AcquireImage(@"CamCapTemp/images");
-                }
+               
             }
             /*
              * images => dossier par défaut pour sauvegarder les images
@@ -169,11 +212,14 @@ namespace CamCap
         {
             if (start.Text == "Stop")
             {
-                if (!Directory.Exists(@"CamCapTemp/images"))
+                
+                string myAppFolder = Path.Combine(AppDataPath, imagesPath);
+                if (!Directory.Exists(myAppFolder))
                 {
-                    Directory.CreateDirectory(@"CamCapTemp/images");
+                    Directory.CreateDirectory(myAppFolder);
                     MessageBox.Show("Image folder Created...");
                 }
+
                 //listView1.Items.Count
                 string path = actualPath + @"\" + "Capture-" + Convert.ToString(get_NumberImage()) + ".jpg";
                 Image copy = pictureBox1.Image;
@@ -549,7 +595,9 @@ namespace CamCap
                 }
                 else
                 {
-                    return "CamCapTemp/images/";
+                    string userAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); //chemin systeme vers AppData
+                    string myAppFolder = Path.Combine(userAppData, "CamCapTemp/images/"); //chemin AppData/CamCapTemp/images
+                    return myAppFolder;
                 }
             }
             set { this["LastFolderOpen"] = value; }

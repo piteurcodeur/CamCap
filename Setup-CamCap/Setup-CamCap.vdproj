@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_4EABDB48D69C47A497534BCC91F75DC2"
+        "MsmKey" = "8:_4657FBAB81464AEF89FEEAC151DCB628"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_80AFBA456F9B45918818683C6FC0BBD6"
+        "MsmKey" = "8:_4EABDB48D69C47A497534BCC91F75DC2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -50,6 +50,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -311,7 +319,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F0EB14AEB3D649A990875F1821435AC2"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6882D7862EB2437CBC791AB7A4639E83"
             {
             "Name" = "8:CamCap"
             "Arguments" = "8:"
@@ -319,8 +327,22 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_80AFBA456F9B45918818683C6FC0BBD6"
+            "Target" = "8:_4657FBAB81464AEF89FEEAC151DCB628"
             "Folder" = "8:_2B98A879FDCC42DF9AA51C98F680AC4F"
+            "WorkingFolder" = "8:_4300E69CC6A04C43A341E4284ED3C9D9"
+            "Icon" = "8:_4EABDB48D69C47A497534BCC91F75DC2"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9718C366077248D0A8A8C9990CED6958"
+            {
+            "Name" = "8:CamCap"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_4657FBAB81464AEF89FEEAC151DCB628"
+            "Folder" = "8:_535C087C8EF045D286B25C53D44D47D3"
             "WorkingFolder" = "8:_4300E69CC6A04C43A341E4284ED3C9D9"
             "Icon" = "8:_4EABDB48D69C47A497534BCC91F75DC2"
             "Feature" = "8:"
@@ -724,7 +746,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_80AFBA456F9B45918818683C6FC0BBD6"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4657FBAB81464AEF89FEEAC151DCB628"
             {
             "SourcePath" = "8:..\\CamCap\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"

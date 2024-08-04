@@ -23,6 +23,12 @@ using Aspose.Imaging.ImageOptions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Reflection.Emit;
 
+
+
+
+
+
+
 namespace CamCap
 {
 
@@ -35,7 +41,7 @@ namespace CamCap
             //private ImageMetaExtensions ImageMetaExtensions = new ImageMetaExtensions();
 
             ImageName.value = imageName;
-            ImageName.doc_path = actualpath + @"/";
+            ImageName.actualPath = actualpath + @"/";
             //int nouvelleLargeur = 500;
             //int nouvelleHauteur = 350;
             //Image imageRedimensionnee = image.GetThumbnailImage(nouvelleLargeur, nouvelleHauteur, null, IntPtr.Zero);
@@ -44,7 +50,15 @@ namespace CamCap
             textBox2.Text = imageName.Split(".")[0];
 
         }
-        public string defaultDirectoryPath = @"CamCapTemp/repertoire/";
+        /*
+         * Retrouver le chemin de AppData 
+         * 
+         * defaultDirectoryPath => repertoire
+         */
+        static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        static string repertoirePath = Path.Combine(AppDataPath, @"CamCapTemp/repertoire/");
+        public string imagesPath = Path.Combine(AppDataPath, @"CamCapTemp/images/");
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -58,37 +72,50 @@ namespace CamCap
                 if (comment != "") //commentaire non nul
                 {
                     Image modifiee = EditExif(im, comment);
-                    string imagePath = ImageName.doc_path + textBox2.Text + ".jpg";
+                    string imagePath = ImageName.actualPath + textBox2.Text + ".jpg";
                     if (textBox2.Text != "")
                     {
-                        CreateDefaultDirectory();
-                        modifiee.Save(defaultDirectoryPath + textBox2.Text + ".jpg");
+                        if (Directory.Exists(ImageName.actualPath))
+                        {
+                            modifiee.Save(repertoirePath + textBox2.Text + ".jpg");
+                        }
+                        else
+                        {
+                            CreateDefaultDirectory();
+                            modifiee.Save(repertoirePath + textBox2.Text + ".jpg");
+                        }
+                        
                     }
                     else
                     {
                         MessageBox.Show("Vous devez donner un nom à votre fichier");
                     }
+                    im.Dispose();
+                    File.Delete(ImageName.actualPath + ImageName.value); //supprimer l'image précédente
                     modifiee.Dispose();
                 }
-                else
+                else //commentaire nul
                 {
                     Image modifiee = im;
-                    modifiee.Save(ImageName.doc_path + textBox2.Text + ".jpg");
+                    if(!Directory.Exists(ImageName.actualPath + textBox2.Text + ".jpg"))
+                    {
+                        modifiee.Save(repertoirePath + textBox2.Text + ".jpg"); //save dans le repertoire temp
+                        
+                    }
                     modifiee.Dispose();
+                    im.Dispose();
                 }
+                
+                File.Delete(ImageName.actualPath + ImageName.value); //supprimer l'image précédente
 
-                File.Delete(ImageName.doc_path + ImageName.value); //supprimer l'image précédente
-                
-                im.Dispose();
-                
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Vous devez choisir un nouveau nom de fichier " + ex);
             }
 
-            File.Copy(defaultDirectoryPath + textBox2.Text + ".jpg", ImageName.doc_path + textBox2.Text + ".jpg", true);
-            File.Delete(defaultDirectoryPath + textBox2.Text + ".jpg");
+            File.Copy(repertoirePath + textBox2.Text + ".jpg", ImageName.actualPath + textBox2.Text + ".jpg", true);
+            File.Delete(repertoirePath + textBox2.Text + ".jpg");
             Close();
 
         }
@@ -96,9 +123,9 @@ namespace CamCap
         private void CreateDefaultDirectory()
         {
             //Créer un répertoire pour enregistrer l'image temporairement pendant les modifications, s'il n'existe pas déjà
-            if (!Directory.Exists(defaultDirectoryPath))
+            if (!Directory.Exists(repertoirePath))
             {
-                Directory.CreateDirectory(defaultDirectoryPath);
+                Directory.CreateDirectory(repertoirePath);
             }
         }
 
@@ -145,7 +172,7 @@ namespace CamCap
         {
             pictureBox1.Image.Dispose();
             //supprimer les images du repertoire
-            string[] files = Directory.GetFiles(defaultDirectoryPath);
+            string[] files = Directory.GetFiles(repertoirePath);
             foreach (string file in files)
             {
                 File.Delete(file);
@@ -187,7 +214,7 @@ namespace CamCap
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            using (Image image = Image.FromFile(ImageName.doc_path + ImageName.value))
+            using (Image image = Image.FromFile(ImageName.actualPath + ImageName.value))
             {
                 // Lire les PropertyItems de l'image
                 PropertyItem[] propertyItems = image.PropertyItems;
@@ -235,7 +262,8 @@ namespace CamCap
 
         public static string value;
         //public static string path = @"CamCapTemp/images";
-        public static string doc_path = @"CamCapTemp/images/";
+        static string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string actualPath = AppDataPath +  @"CamCapTemp/images/";
 
     }
 
