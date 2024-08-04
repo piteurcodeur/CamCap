@@ -145,6 +145,7 @@ namespace CamCap
         private void video_NewFrame(object sender, NewFrameEventArgs eventArgs) //eventhandler if new frame is ready
         {
             System.Drawing.Bitmap img = (System.Drawing.Bitmap)eventArgs.Frame.Clone();
+            img.RotateFlip(RotateFlipType.RotateNoneFlipX);
             pictureBox1.Image = img;
         }
 
