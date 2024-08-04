@@ -102,6 +102,7 @@
             // 
             listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             listView1.BackColor = Color.FromArgb(54, 57, 63);
+            listView1.ForeColor = Color.White;
             listView1.Location = new Point(12, 47);
             listView1.Margin = new Padding(3, 2, 3, 2);
             listView1.Name = "listView1";
@@ -144,6 +145,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = SystemColors.ActiveCaption;
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { MenuFile, MenuDevice, MenuResolution, MenuSettings, MenuVideo });
             menuStrip1.Location = new Point(0, 0);
